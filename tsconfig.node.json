@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "composite": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "types": [
+      "electron-vite/node"
+    ]
+  },
+  "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+  "include": [
+    "electron.vite.config.*",
+    "src/main/*",
+    "src/preload/*",
+    "src/main/electron-handler/*",
+    "src/main/cpp-integrations",
+    "src/main/update/*",
+    "src/main/videoMaker/*",
+    "src/main/windows/*",
+    "src/main/electronApi/*",
+    "vite.config.ts",
+    "electron.vite.config.ts"
+  ]
+}
