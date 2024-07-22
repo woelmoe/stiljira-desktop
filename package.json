@@ -13,8 +13,8 @@
     "package-linux": "electron-forge package --platform=linux --arch=x64",
     "package-win": "electron-forge package --platform=win32 --arch=x64",
     "pull-submodule": "git submodule update --init",
-    "full-setup-win": "yarn pull-submodule && cd src/renderer && yarn && yarn build && cd ../../ && yarn && yarn build && yarn package-win",
-    "full-setup-linux": "yarn pull-submodule && cd src/renderer && yarn && yarn build && cd ../../ && yarn && yarn build && yarn package-linux"
+    "full-setup-win": "yarn && yarn pull-submodule && cd src/renderer && git checkout main && yarn && yarn build && cd ../../ && yarn build && yarn package-win",
+    "full-setup-linux": "yarn && yarn pull-submodule && cd src/renderer && git checkout main && yarn && yarn build && cd ../../ && yarn build && yarn package-linux"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
@@ -22,7 +22,7 @@
     "@types/express": "^4.17.21",
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^6.1.7",
-    "express": "^4.17.3",
+    "express": "5.0.0-beta.3",
     "vite-plugin-static-copy": "^1.0.6"
   },
   "devDependencies": {
@@ -41,7 +41,7 @@
     "@vue/eslint-config-standard": "^8.0.1",
     "@vue/eslint-config-typescript": "^12.0.0",
     "cross-env": "^7.0.3",
-    "electron": "^28.1.1",
+    "electron": "30.0.0-alpha.3",
     "electron-builder": "^24.9.1",
     "electron-debug": "^3.2.0",
     "electron-devtools-installer": "^3.2.0",
@@ -57,7 +57,7 @@
     "eslint-plugin-vue": "^9.21.0",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3",
-    "vite": "^5.0.11",
+    "vite": "5.2.6",
     "vite-plugin-eslint": "^1.8.1"
   }
 }
