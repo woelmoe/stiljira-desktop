@@ -28,8 +28,8 @@ function createWindow(): void {
   mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
 }
 
-app.whenReady().then(() => {
-  setupJsonServer()
+app.whenReady().then(async () => {
+  await setupJsonServer()
   electronApp.setAppUserModelId('com.electron')
 
   app.on('browser-window-created', (_, window) => {
