@@ -1,12 +1,12 @@
 import path from 'node:path'
 import fs from 'fs'
 import { ITask } from '../setupJsonServer'
+import { initDataBase } from '../utils/initDataBase'
 
-const jsonBdPath = path.join(__dirname, 'db.json')
-const databaseRaw = fs.readFileSync(jsonBdPath, 'utf-8')
-const parsedDatabase = JSON.parse(databaseRaw)
-const database: ITask[] = parsedDatabase.tasks
-let lastId = parsedDatabase.lastId
+const databaseData = initDataBase()
+let database = databaseData.database
+let lastId = databaseData.lastId
+const jsonBdPath = databaseData.jsonBdPath
 
 export function getTasks() {
   return JSON.stringify(database)

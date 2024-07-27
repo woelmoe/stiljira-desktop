@@ -10,6 +10,7 @@
     "start": "electron-vite preview",
     "dev": "cross-env IS_DEV=true electron-vite dev --watch",
     "build": "electron-vite build",
+    "build-all": "yarn build && cd src/renderer && yarn && yarn build",
     "package-linux": "electron-forge package --platform=linux --arch=x64",
     "package-win": "electron-forge package --platform=win32 --arch=x64",
     "pull-submodule": "git submodule update --init",
