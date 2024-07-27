@@ -1,6 +1,6 @@
 import express from 'express'
-import { TaskType } from '@/assets/interfaces/interface'
 import { addControllers } from './controllers'
+import { TaskType } from '../renderer/src/assets/interfaces/interface'
 
 export interface ITask {
   id: number
