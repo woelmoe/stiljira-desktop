@@ -3,7 +3,7 @@ import fs from 'fs'
 import { ITask } from '../setupJsonServer'
 
 export function initDataBase() {
-  const jsonBdPath = path.join(__dirname, 'db.json')
+  const jsonBdPath = path.join(__dirname, 'stiljira-database.json')
   let databaseRaw
   try {
     databaseRaw = fs.readFileSync(jsonBdPath, 'utf-8')
