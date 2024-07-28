@@ -1,4 +1,19 @@
+const path = require('path')
+const fs = require('fs')
 module.exports = {
+  hooks: {
+    packageAfterCopy: async (
+      config,
+      buildPath,
+      electronVersion,
+      platform,
+      arch
+    ) => {
+      const src = path.join(__dirname, 'node_modules/dotenv')
+      const dst = path.join(buildPath, 'node_modules/dotenv')
+      fs.cpSync(src, dst, { recursive: true })
+    }
+  },
   packagerConfig: {
     ignore: [
       /^\/src/,

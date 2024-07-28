@@ -3,7 +3,9 @@ import { join } from 'path'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { setupJsonServer } from './setupJsonServer'
+import 'dotenv/config'
 
+const isDev = process.env.IS_DEV === 'true'
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -12,7 +14,8 @@ function createWindow(): void {
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      sandbox: false
+      sandbox: false,
+      devTools: isDev
     }
   })
 
@@ -25,7 +28,18 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+  if (process.env.STILJIRA_URL) {
+    mainWindow.loadURL(process.env.STILJIRA_URL)
+    console.log('loaded from url', process.env.STILJIRA_URL)
+  } else {
+    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+    console.log('loaded from static')
+  }
+
+  mainWindow.webContents.on('did-fail-load', () => {
+    console.log('WINDOW did-fail-load ERROR OCCURRED')
+    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+  })
 }
 
 app.whenReady().then(async () => {

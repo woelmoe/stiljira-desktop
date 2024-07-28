@@ -15,6 +15,7 @@ ssh-key
 ssh-key.pub
 
 # local env files
+.env
 .env.local
 .env.*.local
 
