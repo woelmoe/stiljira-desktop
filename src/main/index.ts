@@ -41,13 +41,11 @@ function createWindow(): void {
     console.log('WINDOW did-fail-load ERROR OCCURRED')
     mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
   })
-  mainWindow.webContents.on('render-process-gone', () => {
-    console.log('WINDOW render-process-gone ERROR OCCURRED')
-    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
-  })
-  mainWindow.webContents.on('unresponsive', () => {
-    console.log('WINDOW render-process-gone ERROR OCCURRED')
-    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+  mainWindow.webContents.on('console-message', (_event, _lvl, message) => {
+    if (message.includes('server connection lost')) {
+      console.log('console-message', message)
+      mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+    }
   })
 }
 
