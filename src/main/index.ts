@@ -32,6 +32,13 @@ function createWindow(): void {
   if (process.env.STILJIRA_URL) {
     mainWindow.loadURL(process.env.STILJIRA_URL)
     console.log('loaded from url', process.env.STILJIRA_URL)
+
+    mainWindow.webContents.on('console-message', (_event, _lvl, message) => {
+      if (message.includes('server connection lost')) {
+        console.log('console-message:', message)
+        mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+      }
+    })
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
     console.log('loaded from static')
@@ -40,12 +47,6 @@ function createWindow(): void {
   mainWindow.webContents.on('did-fail-load', () => {
     console.log('WINDOW did-fail-load ERROR OCCURRED')
     mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
-  })
-  mainWindow.webContents.on('console-message', (_event, _lvl, message) => {
-    if (message.includes('server connection lost')) {
-      console.log('console-message', message)
-      mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
-    }
   })
 }
 
