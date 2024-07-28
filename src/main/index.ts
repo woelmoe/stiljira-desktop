@@ -4,6 +4,7 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { setupJsonServer } from './setupJsonServer'
 import 'dotenv/config'
+import { registerHotkeys } from './utils/registerHotkeys'
 
 const isDev = process.env.IS_DEV === 'true'
 function createWindow(): void {
@@ -40,9 +41,18 @@ function createWindow(): void {
     console.log('WINDOW did-fail-load ERROR OCCURRED')
     mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
   })
+  mainWindow.webContents.on('render-process-gone', () => {
+    console.log('WINDOW render-process-gone ERROR OCCURRED')
+    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+  })
+  mainWindow.webContents.on('unresponsive', () => {
+    console.log('WINDOW render-process-gone ERROR OCCURRED')
+    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+  })
 }
 
 app.whenReady().then(async () => {
+  registerHotkeys()
   await setupJsonServer()
   electronApp.setAppUserModelId('com.electron')
 
