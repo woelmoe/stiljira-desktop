@@ -4,7 +4,7 @@ import icon from '../../../resources/icon.png?asset'
 
 const isDev = process.env.IS_DEV === 'true'
 
-export function createWindow(): void {
+export async function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -28,22 +28,39 @@ export function createWindow(): void {
   })
 
   if (process.env.STILJIRA_URL) {
-    mainWindow.loadURL(process.env.STILJIRA_URL)
-    console.log('loaded from url', process.env.STILJIRA_URL)
-
-    mainWindow.webContents.on('console-message', (_event, _lvl, message) => {
-      if (message.includes('server connection lost')) {
-        console.log('console-message:', message)
-        mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
-      }
-    })
+    await handleLoadUrl(process.env.STILJIRA_URL)
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
-    console.log('loaded from static')
+    loadStatic()
   }
 
   mainWindow.webContents.on('did-fail-load', () => {
     console.log('WINDOW did-fail-load ERROR OCCURRED')
-    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+    loadStatic()
   })
+
+  function loadStatic() {
+    mainWindow.loadFile(join(__dirname, '../renderer/dist/index.html'))
+    console.log('loaded from static')
+  }
+
+  async function handleLoadUrl(url: string) {
+    await mainWindow.loadURL(url)
+    const accessResult = await mainWindow.webContents.executeJavaScript(
+      'window.appAccessTitle'
+    )
+    if (accessResult !== 'stiljira-access') {
+      console.log('Access to render app denied')
+      loadStatic()
+      return
+    }
+
+    console.log('loaded from url', url)
+
+    mainWindow.webContents.on('console-message', (_event, _lvl, message) => {
+      if (message.includes('server connection lost')) {
+        console.log('console-message:', message)
+        loadStatic()
+      }
+    })
+  }
 }
