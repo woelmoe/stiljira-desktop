@@ -14,8 +14,8 @@
     "package-linux": "electron-forge package --platform=linux --arch=x64",
     "package-win": "electron-forge package --platform=win32 --arch=x64",
     "pull-submodule": "git submodule update --init",
-    "full-setup-win": "yarn && yarn pull-submodule && cd src/renderer && git checkout main && yarn && yarn build && cd ../../ && yarn build && yarn package-win",
-    "full-setup-linux": "yarn && yarn pull-submodule && cd src/renderer && git checkout main && yarn && yarn build && cd ../../ && yarn build && yarn package-linux"
+    "setup-win": "yarn && yarn pull-submodule && cd src/renderer && git checkout main && yarn && yarn build && cd ../../ && yarn build && yarn package-win",
+    "setup-linux": "yarn && yarn pull-submodule && cd src/renderer && git checkout main && yarn && yarn build && cd ../../ && yarn build && yarn package-linux"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",

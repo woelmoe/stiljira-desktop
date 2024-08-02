@@ -16,7 +16,7 @@ export async function setupJsonServer() {
   app.use(cors)
   app.use(routesTasks)
 
-  const port = process.env.PORT || 3000
+  const port = process.env.PORT || 3004
 
   app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`)
